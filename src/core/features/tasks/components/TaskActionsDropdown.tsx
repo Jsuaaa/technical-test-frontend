@@ -106,7 +106,7 @@ const TaskActionsDropdown = ({
     <div ref={containerRef} className="relative">
       <button
         type="button"
-        className="flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-gray-500 transition hover:border-gray-300 hover:bg-gray-100"
+        className="flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-gray-500 transition hover:border-gray-300 hover:bg-gray-100 cursor-pointer"
         aria-label={triggerAriaLabel}
         disabled={isGloballyDisabled}
         onClick={handleToggle}
@@ -123,7 +123,7 @@ const TaskActionsDropdown = ({
         >
           <button
             type="button"
-            className="w-full rounded-md px-3 py-2 text-left text-sm text-gray-700 transition hover:bg-gray-100 cursor-pointer"
+            className="w-full ml-1 rounded-md px-3 py-2 text-left text-sm text-primary transition hover:bg-gray-100 cursor-pointer"
             onClick={handleEditClick}
             disabled={isGloballyDisabled}
           >
@@ -154,7 +154,7 @@ const TaskActionsDropdown = ({
           <div className="mt-2 border-t border-gray-100 pt-2">
             <button
               type="button"
-              className="w-full rounded-md px-3 py-2 text-left text-sm text-red-600 transition hover:bg-red-50 cursor-pointer"
+              className="w-full ml-1 rounded-md px-3 py-2 text-left text-sm text-red-600 transition hover:bg-red-50 cursor-pointer"
               onClick={handleDeleteClick}
               disabled={isGloballyDisabled}
             >

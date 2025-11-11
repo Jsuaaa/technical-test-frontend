@@ -1,9 +1,4 @@
-import { useMemo } from "react";
-
-import {
-  TASK_STATUSES,
-  TaskActionCallbacks,
-} from "../../../lib/utils";
+import { TaskActionCallbacks } from "../../../lib/utils";
 import useTasks from "./useTasks";
 import { Task, TaskStatus } from "../types/task";
 
@@ -21,22 +16,6 @@ const useTaskBoard = () => {
     deleteTask,
     isDeleting,
   } = useTasks();
-
-  const tasksByStatus = useMemo(() => {
-    const accumulator = TASK_STATUSES.reduce<Record<TaskStatus, Task[]>>(
-      (acc, status) => {
-        acc[status] = [];
-        return acc;
-      },
-      {} as Record<TaskStatus, Task[]>
-    );
-
-    tasks.forEach((task) => {
-      accumulator[task.status]?.push(task);
-    });
-
-    return accumulator;
-  }, [tasks]);
 
   const handleCreateTask = (
     payload: Omit<Task, "id">,
@@ -94,7 +73,6 @@ const useTaskBoard = () => {
 
   return {
     tasks,
-    tasksByStatus,
     isLoading,
     isError,
     error,

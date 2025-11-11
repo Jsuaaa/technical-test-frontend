@@ -9,6 +9,8 @@ type TaskStatusSelectProps = {
   onChange: (value: TaskStatus) => void;
   hideLabel?: boolean;
   disabled?: boolean;
+  invalid?: boolean;
+  invalidText?: string;
 };
 
 const TaskStatusSelect = ({
@@ -17,6 +19,8 @@ const TaskStatusSelect = ({
   onChange,
   hideLabel = false,
   disabled = false,
+  invalid = false,
+  invalidText,
 }: TaskStatusSelectProps) => (
   <Select
     id={id}
@@ -25,9 +29,15 @@ const TaskStatusSelect = ({
     value={value}
     onChange={(event) => onChange(event.target.value as TaskStatus)}
     disabled={disabled}
+    invalid={invalid}
+    invalidText={invalidText}
   >
     {TASK_STATUSES.map((status) => (
-      <SelectItem key={status} value={status} text={formatTaskStatusLabel(status)} />
+      <SelectItem
+        key={status}
+        value={status}
+        text={formatTaskStatusLabel(status)}
+      />
     ))}
   </Select>
 );

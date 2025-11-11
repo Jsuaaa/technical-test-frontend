@@ -5,12 +5,13 @@ import { TASK_STATUSES, formatTaskStatusLabel } from "../../../lib/utils";
 import useTaskBoard from "../hooks/useTaskBoard";
 
 const BoardView = () => {
-  const { tasksByStatus } = useTaskBoard();
+  const { tasks } = useTaskBoard();
 
   const boardColumnsStyle = useMemo(
     () =>
       ({
         "--board-columns": `repeat(${TASK_STATUSES.length}, minmax(0, 1fr))`,
+        margin: "20px",
       } as CSSProperties),
     []
   );
@@ -25,14 +26,17 @@ const BoardView = () => {
           key={status}
           className="flex min-h-full flex-col gap-3 rounded-lg border border-gray-200 bg-white/60 p-4"
         >
-          <Heading style={{ fontSize: "1rem" }}>
+          <Heading style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
             {formatTaskStatusLabel(status)}
           </Heading>
           <div className="flex h-full flex-col gap-4">
-            {tasksByStatus[status].length &&
-              tasksByStatus[status].map((task) => (
-                <TaskComponent key={task.id} task={task} />
-              ))}
+            {tasks.length &&
+              tasks.map(
+                (task) =>
+                  task.status === status && (
+                    <TaskComponent key={task.id} task={task} />
+                  )
+              )}
           </div>
         </div>
       ))}

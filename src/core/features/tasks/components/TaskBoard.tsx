@@ -23,15 +23,16 @@ const TaskBoard = () => {
     <div className="flex justify-center px-4">
       <div className="w-full max-w-[1200px] my-10 space-y-6">
         <div className="flex flex-col gap-4">
-          <Heading style={{ fontSize: "1.5rem" }}>Tablero de tareas</Heading>
+          <Heading style={{ fontSize: "3rem", fontWeight: "bold" }}>
+            Tablero de tareas
+          </Heading>
           <span
             style={{
               fontSize: "0.95rem",
               color: "var(--cds-text-secondary, #525252)",
             }}
           >
-            Cambia entre vistas para organizar y seguir el progreso de tu
-            equipo.
+            Cambia entre vistas para organizar y seguir tu proceso de trabajo.
           </span>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap gap-3">
@@ -50,8 +51,7 @@ const TaskBoard = () => {
                 Vista lista
               </Button>
             </div>
-            <CreateTaskButton
-            />
+            <CreateTaskButton />
           </div>
         </div>
         <div className="w-full">
