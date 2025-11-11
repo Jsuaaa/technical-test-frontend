@@ -1,0 +1,8 @@
+echo "Preparing Husky ..."
+pnpm prepare
+
+echo "Linting ..."
+pnpm lint
+
+echo "Building"
+pnpm build

@@ -87,7 +87,7 @@ const TaskBoard = () => {
   }, []);
 
   return (
-    <Layer level={1}>
+    <Layer level={1} className="flex justify-center">
       <Section level={2} className="max-w-[1200px] mx-auto my-10 w-full">
         <Stack gap={6} className="p-4">
           <Stack gap={3}>

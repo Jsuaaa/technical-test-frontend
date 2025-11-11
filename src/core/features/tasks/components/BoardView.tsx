@@ -13,7 +13,7 @@ const BoardView = ({
       <Column
         key={status}
         sm={4}
-        md={4}
+        md={5}
         lg={4}
         style={{
           display: "flex",

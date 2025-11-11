@@ -10,7 +10,6 @@ import {
   StructuredListRow,
   StructuredListWrapper,
   Tag,
-  Tile,
 } from "@carbon/react";
 import { PRIORITY_KIND, Task, TASK_STATUS_LABEL } from "./TaskBoard";
 import TaskComponent from "./Task";
