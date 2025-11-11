@@ -6,14 +6,6 @@ import BoardView from "./BoardView";
 import ListView from "./ListView";
 import CreateTaskButton from "./CreateTaskButton";
 import useTaskBoard from "../hooks/useTaskBoard";
-import { TaskPriority } from "../types/task";
-
-// * Task priority color mapping, usually this comes from a db
-export const PRIORITY_KIND: Record<TaskPriority, "red" | "magenta" | "cyan"> = {
-  [TaskPriority.HIGH]: "red",
-  [TaskPriority.MEDIUM]: "magenta",
-  [TaskPriority.LOW]: "cyan",
-};
 
 const TaskBoard = () => {
   const [view, setView] = useState<"board" | "list">("board");

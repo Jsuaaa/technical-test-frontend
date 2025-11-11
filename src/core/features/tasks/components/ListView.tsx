@@ -11,12 +11,11 @@ import {
   StructuredListWrapper,
   Tag,
 } from "@carbon/react";
-import { PRIORITY_KIND } from "./TaskBoard";
 import TaskComponent from "./Task";
 import TaskEditModal from "./TaskEditModal";
 import TaskActionsDropdown from "./TaskActionsDropdown";
 import { Task } from "../types/task";
-import { formatTaskStatusLabel } from "../../../lib/utils";
+import { formatTaskStatusLabel, PRIORITY_KIND } from "../../../lib/utils";
 import useTaskBoard from "../hooks/useTaskBoard";
 
 const MOBILE_BREAKPOINT = 768;
@@ -43,10 +42,7 @@ const ListView = () => {
       {isMobile ? (
         <Stack gap={4}>
           {tasks.map((task) => (
-            <TaskComponent
-              key={task.id}
-              task={task}
-            />
+            <TaskComponent key={task.id} task={task} />
           ))}
         </Stack>
       ) : (
