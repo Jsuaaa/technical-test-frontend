@@ -6,6 +6,11 @@ export type Task = {
   priority: TaskPriority;
 };
 
+export type TasksCountByStatus = {
+  status: TaskStatus;
+  total: number;
+};
+
 export type UpdateTaskVariables = {
   id: string;
   task: Partial<Task>;

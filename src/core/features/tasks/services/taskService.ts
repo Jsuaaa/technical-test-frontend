@@ -1,5 +1,5 @@
 import { supabase } from "@/src/core/lib/supabaseClient";
-import { Task } from "../types/task";
+import { Task, TasksCountByStatus } from "../types/task";
 
 export async function getTasks(): Promise<Task[]> {
   const { data, error } = await supabase.from("tasks").select("*").order("id");
@@ -26,4 +26,11 @@ export async function getTask(id: string): Promise<Task | null> {
   const { data, error } = await supabase.from("tasks").select("*").eq("id", id);
   if (error) throw error;
   return data?.[0] ?? null;
+}
+
+export async function getTasksCountByStatus(): Promise<TasksCountByStatus[]> {
+  // * Supabase RPC to get the count of tasks by status
+  const { data, error } = await supabase.rpc("get_tasks_status_count");
+  if (error) throw error;
+  return data ?? [];
 }

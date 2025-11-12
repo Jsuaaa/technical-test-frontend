@@ -9,7 +9,7 @@ import {
   TASK_STATUS_COLOR,
 } from "../../../lib/utils";
 import { Task } from "../types/task";
-import useTaskBoard from "../hooks/useTaskBoard";
+import useTaskBoard from "../hooks/useTask";
 
 type TaskComponentProps = {
   task: Task;
@@ -64,6 +64,9 @@ const TaskComponent = ({ task }: TaskComponentProps) => {
             <Tag type={TASK_STATUS_COLOR[status]} className="w-fit">
               {formatTaskStatusLabel(status)}
             </Tag>
+            <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-gray-900">
+              <span className="text-xs text-gray-500">FMCR #{id}</span>
+            </div>
           </div>
           <TaskActionsDropdown
             triggerAriaLabel="Abrir menú de acciones"
@@ -81,9 +84,6 @@ const TaskComponent = ({ task }: TaskComponentProps) => {
         <p className="text-sm text-gray-600">
           {description ?? "Sin descripción"}
         </p>
-        <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-gray-900">
-          <span className="text-xs text-gray-500">{id}</span>
-        </div>
       </Tile>
       {isEditModalOpen && (
         <TaskEditModal

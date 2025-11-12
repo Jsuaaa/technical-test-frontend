@@ -16,7 +16,7 @@ import TaskEditModal from "./TaskEditModal";
 import TaskActionsDropdown from "./TaskActionsDropdown";
 import { Task } from "../types/task";
 import { formatTaskStatusLabel, PRIORITY_KIND } from "../../../lib/utils";
-import useTaskBoard from "../hooks/useTaskBoard";
+import useTaskBoard from "../hooks/useTask";
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -60,7 +60,7 @@ const ListView = () => {
             <StructuredListBody>
               {tasks.map((task) => (
                 <StructuredListRow key={task.id}>
-                  <StructuredListCell>{task.id}</StructuredListCell>
+                  <StructuredListCell>FMCR #{task.id}</StructuredListCell>
                   <StructuredListCell>{task.title}</StructuredListCell>
                   <StructuredListCell>
                     <Tag type="gray">{formatTaskStatusLabel(task.status)}</Tag>

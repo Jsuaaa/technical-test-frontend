@@ -1,10 +1,10 @@
-import TasksPage from "../core/features/tasks/pages";
+import TaskBoard from "../core/features/tasks/components/TaskBoard";
 import MainLayout from "../core/shared/layouts/MainLayout";
 
 export default function Home() {
   return (
     <MainLayout>
-      <TasksPage />
+      <TaskBoard />
     </MainLayout>
   );
 }

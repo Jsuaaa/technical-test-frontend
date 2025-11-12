@@ -1,5 +1,5 @@
 import { TaskActionCallbacks } from "../../../lib/utils";
-import useTasks from "./useTasks";
+import useTasksMutations from "./useTasksQueries";
 import { Task, TaskStatus } from "../types/task";
 
 const useTaskBoard = () => {
@@ -8,6 +8,10 @@ const useTaskBoard = () => {
     isLoading,
     isError,
     error,
+    tasksCountByStatus,
+    isLoadingTasksCountByStatus,
+    isErrorTasksCountByStatus,
+    errorTasksCountByStatus,
     refetch,
     createTask,
     isCreating,
@@ -15,7 +19,7 @@ const useTaskBoard = () => {
     isUpdating,
     deleteTask,
     isDeleting,
-  } = useTasks();
+  } = useTasksMutations();
 
   const handleCreateTask = (
     payload: Omit<Task, "id">,
@@ -76,6 +80,10 @@ const useTaskBoard = () => {
     isLoading,
     isError,
     error,
+    tasksCountByStatus,
+    isLoadingTasksCountByStatus,
+    isErrorTasksCountByStatus,
+    errorTasksCountByStatus,
     refetch,
     isCreating,
     isUpdating,

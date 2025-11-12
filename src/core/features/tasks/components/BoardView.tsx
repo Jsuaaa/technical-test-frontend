@@ -2,7 +2,7 @@ import { CSSProperties, useMemo } from "react";
 import { Heading } from "@carbon/react";
 import TaskComponent from "./Task";
 import { TASK_STATUSES, formatTaskStatusLabel } from "../../../lib/utils";
-import useTaskBoard from "../hooks/useTaskBoard";
+import useTaskBoard from "../hooks/useTask";
 
 const BoardView = () => {
   const { tasks } = useTaskBoard();
@@ -11,7 +11,7 @@ const BoardView = () => {
     () =>
       ({
         "--board-columns": `repeat(${TASK_STATUSES.length}, minmax(0, 1fr))`,
-        margin: "20px",
+        marginTop: "30px",
       } as CSSProperties),
     []
   );

@@ -5,6 +5,7 @@ import {
   deleteTask,
   getTask,
   getTasks,
+  getTasksCountByStatus,
   updateTask,
 } from "../services/taskService";
 import { Task, UpdateTaskVariables } from "../types/task";
@@ -15,6 +16,11 @@ const useTasks = () => {
   const tasksQuery = useQuery({
     queryKey: ["tasks"],
     queryFn: getTasks,
+  });
+
+  const tasksCountByStatusQuery = useQuery({
+    queryKey: ["tasks-count-by-status"],
+    queryFn: getTasksCountByStatus,
   });
 
   const createTaskMutation = useMutation({
@@ -51,6 +57,10 @@ const useTasks = () => {
     isLoading: tasksQuery.isLoading,
     isError: tasksQuery.isError,
     error: tasksQuery.error,
+    tasksCountByStatus: tasksCountByStatusQuery.data ?? [],
+    isLoadingTasksCountByStatus: tasksCountByStatusQuery.isLoading,
+    isErrorTasksCountByStatus: tasksCountByStatusQuery.isError,
+    errorTasksCountByStatus: tasksCountByStatusQuery.error,
     refetch: tasksQuery.refetch,
     createTask: createTaskMutation.mutate,
     isCreating: createTaskMutation.isPending,
