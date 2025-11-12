@@ -50,6 +50,7 @@ La aplicación **Framecore Task Board** permite:
 - **Tailwind CSS 4** para utilidades de estilo
 - **Lucide React** para iconografía
 - **Jest 30** + **React Testing Library** para pruebas unitarias
+- **Husky** para configurar scripts de pre-commit para asegurar la integridad del proyecto a la hora de subir a producción
 
 ## Estructura del Proyecto
 
