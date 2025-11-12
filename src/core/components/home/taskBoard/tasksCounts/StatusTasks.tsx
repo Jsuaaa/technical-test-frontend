@@ -2,8 +2,8 @@
 
 import { InlineNotification, SkeletonText, Tile } from "@carbon/react";
 import StatusTaskCard from "./StatusTaskCard";
-import useTaskBoard from "../hooks/useTask";
-import { TASK_STATUSES } from "@/src/core/lib/utils";
+import useTaskBoard from "@/src/core/hooks/useTask";
+import { TASK_STATUSES } from "@/src/core/data/constants";
 
 const StatusTasks = () => {
   const {

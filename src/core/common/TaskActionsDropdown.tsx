@@ -3,7 +3,7 @@ import type { MouseEvent as ReactMouseEvent } from "react";
 
 import TaskPrioritySelect from "./TaskPrioritySelect";
 import TaskStatusSelect from "./TaskStatusSelect";
-import { Task, TaskStatus } from "../types/task";
+import { Task, TaskStatus } from "../domain/task";
 import useTaskBoard from "../hooks/useTask";
 
 type TaskActionsDropdownProps = {

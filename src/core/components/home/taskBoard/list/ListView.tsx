@@ -11,12 +11,13 @@ import {
   StructuredListWrapper,
   Tag,
 } from "@carbon/react";
-import TaskComponent from "./Task";
-import TaskEditModal from "./TaskEditModal";
-import TaskActionsDropdown from "./TaskActionsDropdown";
-import { Task } from "../types/task";
-import { formatTaskStatusLabel, PRIORITY_KIND } from "../../../lib/utils";
-import useTaskBoard from "../hooks/useTask";
+import TaskComponent from "../../../../common/Task";
+import TaskEditModal from "../../../../common/TaskEditModal";
+import TaskActionsDropdown from "../../../../common/TaskActionsDropdown";
+import { Task, TaskPriority } from "../../../../domain/task";
+import useTaskBoard from "../../../../hooks/useTask";
+import { formatTaskStatusLabel } from "@/src/core/utils/formatTaskStatusLabel";
+import { PRIORITY_KIND } from "@/src/core/data/constants";
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -66,7 +67,7 @@ const ListView = () => {
                     <Tag type="gray">{formatTaskStatusLabel(task.status)}</Tag>
                   </StructuredListCell>
                   <StructuredListCell>
-                    <Tag type={PRIORITY_KIND[task.priority]}>
+                    <Tag type={PRIORITY_KIND[task.priority as TaskPriority]}>
                       {task.priority}
                     </Tag>
                   </StructuredListCell>

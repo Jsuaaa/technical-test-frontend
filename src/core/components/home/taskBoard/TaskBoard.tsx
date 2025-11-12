@@ -2,18 +2,18 @@
 
 import { useState } from "react";
 import { Button, Heading, InlineNotification } from "@carbon/react";
-import BoardView from "./BoardView";
-import ListView from "./ListView";
-import CreateTaskButton from "./CreateTaskButton";
-import useTaskBoard from "../hooks/useTask";
-import StatusTasks from "./StatusTasks";
+import ListView from "./list/ListView";
+import CreateTaskButton from "../../../common/CreateTaskButton";
+import useTaskBoard from "../../../hooks/useTask";
+import BoardView from "./board/BoardView";
+import StatusTasks from "./tasksCounts/StatusTasks";
 
 const TaskBoard = () => {
   const [view, setView] = useState<"board" | "list">("board");
   const { isLoading, isError, error, refetch } = useTaskBoard();
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-6 max-w-[1200px]">
       <div className="flex flex-col gap-4">
         <StatusTasks />
         <Heading style={{ fontSize: "3rem", fontWeight: "bold" }}>
@@ -60,10 +60,10 @@ const TaskBoard = () => {
               Reintentar
             </Button>
           </div>
-        ) : isLoading ? (
-          <p className="text-sm text-gray-600">Cargando tareas...</p>
         ) : view === "board" ? (
           <BoardView />
+        ) : isLoading ? (
+          <p className="text-sm text-gray-600">Cargando tareas...</p>
         ) : (
           <ListView />
         )}

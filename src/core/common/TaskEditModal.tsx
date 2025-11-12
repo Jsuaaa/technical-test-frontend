@@ -1,6 +1,5 @@
 import { FormEvent, useMemo, useState } from "react";
 import {
-  Heading,
   Modal,
   Select,
   SelectItem,
@@ -10,8 +9,8 @@ import {
 } from "@carbon/react";
 
 import TaskStatusSelect from "./TaskStatusSelect";
-import { DEFAULT_TASK_PRIORITY, DEFAULT_TASK_STATUS } from "../../../lib/utils";
-import { Task, TaskPriority, TaskStatus } from "../types/task";
+import { Task, TaskPriority, TaskStatus } from "../domain/task";
+import { DEFAULT_TASK_PRIORITY, DEFAULT_TASK_STATUS } from "../data/constants";
 
 type TaskFormState = {
   title: string;
@@ -63,7 +62,6 @@ const TaskEditModal = (props: TaskEditModalProps) => {
     getInitialState(props)
   );
   const [formErrors, setFormErrors] = useState<string>();
-
   const modalHeading = props.mode === "edit" ? "Editar tarea" : "Crear tarea";
   const primaryButtonText =
     props.mode === "edit" ? "Actualizar tarea" : "Crear tarea";
@@ -117,9 +115,9 @@ const TaskEditModal = (props: TaskEditModalProps) => {
     <Modal
       open={open}
       modalHeading={
-        <Heading style={{ fontSize: "2rem", fontWeight: "bold" }}>
+        <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
           {modalHeading}
-        </Heading>
+        </span>
       }
       primaryButtonText={primaryButtonText}
       secondaryButtonText="Cancelar"

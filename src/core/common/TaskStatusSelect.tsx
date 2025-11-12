@@ -1,7 +1,8 @@
 import { Select, SelectItem } from "@carbon/react";
 
-import { TaskStatus } from "../types/task";
-import { TASK_STATUSES, formatTaskStatusLabel } from "../../../lib/utils";
+import { TaskStatus } from "../domain/task";
+import { TASK_STATUSES } from "../data/constants";
+import { formatTaskStatusLabel } from "../utils/formatTaskStatusLabel";
 
 type TaskStatusSelectProps = {
   id: string;

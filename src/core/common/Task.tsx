@@ -3,13 +3,10 @@ import { Heading, Tag, Tile } from "@carbon/react";
 
 import TaskEditModal from "./TaskEditModal";
 import TaskActionsDropdown from "./TaskActionsDropdown";
-import {
-  formatTaskStatusLabel,
-  PRIORITY_KIND,
-  TASK_STATUS_COLOR,
-} from "../../../lib/utils";
-import { Task } from "../types/task";
+import { Task } from "../domain/task";
 import useTaskBoard from "../hooks/useTask";
+import { PRIORITY_KIND, TASK_STATUS_COLOR } from "../data/constants";
+import { formatTaskStatusLabel } from "../utils/formatTaskStatusLabel";
 
 type TaskComponentProps = {
   task: Task;
@@ -23,7 +20,8 @@ const TaskComponent = ({ task }: TaskComponentProps) => {
   const isBusy = isUpdating || isDeleting;
 
   const tileClassName = useMemo(() => {
-    const base = "flex min-h-[200px] flex-col gap-2 rounded-lg p-4 shadow-sm";
+    const base =
+      "flex min-h-[200px] max-w-[700px] flex-col gap-2 rounded-lg p-4 shadow-sm";
     const background = "bg-white";
     const hover = isBusy ? "" : "cursor-pointer transition hover:shadow-md";
     const cursor = isBusy ? "cursor-not-allowed opacity-75" : "";

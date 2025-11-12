@@ -1,3 +1,4 @@
+// * Task type
 export type Task = {
   id: string;
   title: string;
@@ -6,11 +7,13 @@ export type Task = {
   priority: TaskPriority;
 };
 
+// * Tasks count by status type
 export type TasksCountByStatus = {
   status: TaskStatus;
   total: number;
 };
 
+// * Update task variables type
 export type UpdateTaskVariables = {
   id: string;
   task: Partial<Task>;

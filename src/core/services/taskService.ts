@@ -1,5 +1,5 @@
-import { supabase } from "@/src/core/lib/supabaseClient";
-import { Task, TasksCountByStatus } from "../types/task";
+import { supabase } from "@/src/core/utils/supabaseClient";
+import { Task, TasksCountByStatus } from "../domain/task";
 
 export async function getTasks(): Promise<Task[]> {
   const { data, error } = await supabase.from("tasks").select("*").order("id");

@@ -8,9 +8,9 @@ import {
   getTasksCountByStatus,
   updateTask,
 } from "../services/taskService";
-import { Task, UpdateTaskVariables } from "../types/task";
+import { Task, UpdateTaskVariables } from "../domain/task";
 
-const useTasks = () => {
+const useTasksQueries = () => {
   const queryClient = useQueryClient();
 
   const tasksQuery = useQuery({
@@ -27,6 +27,7 @@ const useTasks = () => {
     mutationFn: (task: Omit<Task, "id">) => createTask(task),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["tasks-count-by-status"] });
     },
   });
 
@@ -35,6 +36,7 @@ const useTasks = () => {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["tasks", variables.id] });
+      queryClient.invalidateQueries({ queryKey: ["tasks-count-by-status"] });
     },
   });
 
@@ -43,6 +45,7 @@ const useTasks = () => {
     onSuccess: (_, id) => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.removeQueries({ queryKey: ["tasks", id] });
+      queryClient.invalidateQueries({ queryKey: ["tasks-count-by-status"] });
     },
   });
 
@@ -72,4 +75,4 @@ const useTasks = () => {
   };
 };
 
-export default useTasks;
+export default useTasksQueries;

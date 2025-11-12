@@ -1,7 +1,8 @@
 import { Select, SelectItem } from "@carbon/react";
 
-import { TASK_PRIORITIES, formatTaskPriorityLabel } from "../../../lib/utils";
-import { TaskPriority } from "../types/task";
+import { TaskPriority } from "../domain/task";
+import { TASK_PRIORITIES } from "../data/constants";
+import { formatTaskPriorityLabel } from "../utils/formatTaskPriorityLabel";
 
 type TaskPrioritySelectProps = {
   id: string;

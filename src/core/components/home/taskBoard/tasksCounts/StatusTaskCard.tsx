@@ -1,6 +1,6 @@
+import { TasksCountByStatus } from "@/src/core/domain/task";
+import { formatTaskStatusLabel } from "@/src/core/utils/formatTaskStatusLabel";
 import { Tile } from "@carbon/react";
-import { TasksCountByStatus } from "../types/task";
-import { formatTaskStatusLabel } from "@/src/core/lib/utils";
 
 const StatusTaskCard = ({ status, total }: TasksCountByStatus) => {
   return (

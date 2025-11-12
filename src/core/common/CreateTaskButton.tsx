@@ -3,7 +3,7 @@ import { Button } from "@carbon/react";
 
 import TaskEditModal from "./TaskEditModal";
 import useTaskBoard from "../hooks/useTask";
-import { Task } from "../types/task";
+import { Task } from "../domain/task";
 import { PlusIcon } from "lucide-react";
 
 const CreateTaskButton = () => {

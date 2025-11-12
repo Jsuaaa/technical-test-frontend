@@ -1,6 +1,6 @@
-import { TaskActionCallbacks } from "../../../lib/utils";
-import useTasksMutations from "./useTasksQueries";
-import { Task, TaskStatus } from "../types/task";
+import { Task, TaskStatus } from "../domain/task";
+import { TaskActionCallbacks } from "../utils/formatTaskPriorityLabel";
+import useTasksQueries from "./useTasksQueries";
 
 const useTaskBoard = () => {
   const {
@@ -19,7 +19,7 @@ const useTaskBoard = () => {
     isUpdating,
     deleteTask,
     isDeleting,
-  } = useTasksMutations();
+  } = useTasksQueries();
 
   const handleCreateTask = (
     payload: Omit<Task, "id">,
