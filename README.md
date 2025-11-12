@@ -1,10 +1,11 @@
 # Framecore Task Board
 
-**Framecore Task Board** es una aplicación construida con Next.js 16 y TypeScript que permite gestionar tareas conectándose a una base de datos de Supabase. El tablero ofrece visualización en formato kanban y en lista, métricas por estado, búsqueda con debounce e interacciones inline para editar, cambiar estado, ajustar prioridad o eliminar tareas sin abandonar la vista.
+**Framecore Task Board** es una aplicación construida con Next.js 16 y TypeScript que centraliza la gestión de tareas sobre una base de datos de Supabase. El tablero ofrece visualización kanban y tabular, métricas en tiempo real, búsqueda debounced y acciones inline para crear, actualizar o eliminar tareas sin abandonar la vista principal.
 
 ## Demo
 
-Actualmente no hay una demo pública desplegada. Puedes ejecutar el proyecto en local siguiendo los pasos de instalación.
+La aplicación se encuentra hosteada en Vercel, pueden acceder a una demo desde
+[technical-test-frontend-ten.vercel.app](technical-test-frontend-ten.vercel.app)
 
 ## Tabla de Contenidos
 
@@ -24,52 +25,66 @@ Actualmente no hay una demo pública desplegada. Puedes ejecutar el proyecto en 
 
 La aplicación **Framecore Task Board** permite:
 
-- Visualizar tareas en un tablero kanban organizado por estado o en una lista tabular adaptable.
-- Crear nuevas tareas mediante un modal con validaciones básicas.
-- Actualizar título, descripción, estado y prioridad tanto desde un modal como desde un menú contextual inline.
-- Eliminar tareas con confirmación y retroalimentación inmediata.
-- Monitorear métricas agregadas por estado a través de tarjetas informativas.
-- Filtrar tareas por ID, título o descripción con búsqueda debounced para consultas eficientes sobre Supabase.
+- Alternar entre una vista kanban y una vista lista para organizar tareas según el estado o un listado tabular responsive que se adapta a escritorio y mobile.
+- Crear nuevas tareas mediante un modal con validaciones de campos obligatorios y valores por defecto de estado/prioridad.
+- Actualizar título, descripción, estado y prioridad desde un modal o mediante un menú contextual con controles inline.
+- Eliminar tareas con confirmación y retroalimentación inmediata tras la mutación.
+- Consultar métricas agregadas por estado alimentadas por una función RPC de Supabase.
+- Filtrar tareas por ID, título o descripción empleando una búsqueda con debounce de 400 ms que evita consultas innecesarias.
 
 ## Características
 
-- **Vistas intercambiables:** Alterna entre vista tablero y vista lista manteniendo contexto y filtros.
-- **Búsqueda inteligente:** Campo con debounce de 400 ms que evita sobrecargar la API y permite limpiar resultados rápidamente.
-- **Edición contextual:** Menú de acciones con cambios inline de prioridad/estado y acceso al modal de edición completa.
-- **Métricas en tiempo real:** Tarjetas con totales por estado alimentadas por una función RPC en Supabase.
-- **Gestión de tareas CRUD:** Creación, actualización y eliminación de tareas con manejo de estados de carga y error.
-- **Interfaz accesible:** Componentes Carbon Design System + Tailwind CSS 4 para un diseño responsivo y consistente.
+- **Vistas intercambiables:** Un toggle permite mantener filtros y contexto al pasar de tablero a lista.
+- **Búsqueda inteligente:** `SearchBar` normaliza el término y sincroniza el resultado con Supabase usando React Query.
+- **Edición contextual:** `TaskActionsDropdown` habilita cambios inline de estado/prioridad y apertura rápida del modal de edición.
+- **Métricas en tiempo real:** `StatusTasks` consume el RPC `get_tasks_status_count` para mostrar totales por columna.
+- **Gestión completa de tareas:** Hook personalizados (`useTaskCreate`, `useTaskUpdate`, `useTaskDelete`) invalidan cachés y sincronizan UI tras cada mutación.
+- **Diseño accesible:** Componentes de Carbon Design System combinados con utilidades de Tailwind CSS 4 y tipografías Geist.
 
 ## Tecnologías Utilizadas
 
-- **Next.js 16 (App Router)**
-- **React 19** y **TypeScript**
-- **@tanstack/react-query 5** para fetching, caché y sincronización de estado remoto
-- **Supabase** (`@supabase/supabase-js`) como backend de datos
-- **Carbon Design System** (`@carbon/react`, `@carbon/styles`) para componentes UI
+- **Next.js 16** (App Router) con **React 19** y **TypeScript**
+- **@tanstack/react-query 5** para data fetching, caché y sincronización de estado remoto
+- **Supabase** (`@supabase/supabase-js`) como backend de datos y funciones RPC
+- **Carbon Design System** (`@carbon/react`, `@carbon/styles`) para componentes UI accesibles
 - **Tailwind CSS 4** para utilidades de estilo
 - **Lucide React** para iconografía
+- **Jest 30** + **React Testing Library** para pruebas unitarias
 
 ## Estructura del Proyecto
 
-La organización sigue un enfoque modular que separa dominio, servicios y presentación:
+La organización sigue un enfoque modular que separa dominio, servicios, providers y presentación:
 
 ```
 └── src
-    ├── app
-    │   ├── layout.tsx
-    │   └── page.tsx
-    ├── core
-    │   ├── common/                # Componentes reusables (modales, dropdowns, inputs)
-    │   ├── components/home/       # Páginas y vistas específicas (tablero, lista, métricas)
-    │   ├── data/                  # Constantes y mapeos de dominio
-    │   ├── domain/                # Tipos y enums de negocio
-    │   ├── hooks/                 # Hooks personalizados (React Query, debounce, contexto)
-    │   ├── layouts/               # Layouts compartidos
-    │   ├── providers/             # Providers de contexto y React Query
-    │   ├── services/              # Integraciones con Supabase
-    │   ├── styles/                # Estilos globales
-    │   └── utils/                 # Helpers de formato y clientes externos
+    ├── app/
+    │   ├── layout.tsx              # Root layout con React Query Provider y estilos globales
+    │   └── page.tsx                # Entrada principal con el TaskBoard
+    └── core/
+        ├── common/                 # Componentes compartidos (botones, modales, dropdowns, selects)
+        ├── components/
+        │   └── home/
+        │       └── taskBoard/
+        │           ├── TaskBoard.tsx
+        │           ├── board/
+        │           │   ├── BoardView.tsx
+        │           │   └── __tests__/BoardView.test.tsx
+        │           ├── list/
+        │           │   ├── ListView.tsx
+        │           │   └── __tests__/ListView.test.tsx
+        │           └── tasksCounts/
+        │               ├── StatusTasks.tsx
+        │               ├── StatusTaskCard.tsx
+        │               └── __tests__/StatusTasks.test.tsx
+        ├── data/                   # Constantes y mapeos de dominio ↔ UI
+        ├── domain/                 # Tipos de negocio (Task, enums, contratos)
+        ├── hooks/                  # Hooks de React Query y utilidades (debounce, fetch, mutaciones)
+        │   └── __tests__/          # Pruebas unitarias de hooks (React Query, debounce)
+        ├── layouts/                # Layouts compartidos de la aplicación
+        ├── providers/              # Contextos (TaskBoard) y proveedor de React Query
+        ├── services/               # Integración con Supabase (CRUD y RPC)
+        ├── styles/                 # Estilos globales
+        └── utils/                  # Helpers de formato y cliente de Supabase
 ```
 
 ## Instalación
@@ -87,9 +102,7 @@ La organización sigue un enfoque modular que separa dominio, servicios y presen
    pnpm install
    ```
 
-3. **Configura las variables de entorno:**
-
-   Crea un archivo `.env.local` en la raíz con las claves de tu proyecto Supabase:
+3. **Configura las variables de entorno** creando un archivo `.env.local` en la raíz:
 
    ```
    NEXT_PUBLIC_SUPABASE_URL=<tu-url-de-supabase>
@@ -98,7 +111,7 @@ La organización sigue un enfoque modular que separa dominio, servicios y presen
 
 4. **Prepara tu base de datos Supabase:**
 
-   - Crea una tabla `tasks` con las columnas mínimas:
+   - Crea la tabla `tasks`:
 
      ```sql
      create table public.tasks (
@@ -111,7 +124,7 @@ La organización sigue un enfoque modular que separa dominio, servicios y presen
      );
      ```
 
-   - Crea la función RPC `get_tasks_status_count` utilizada por la vista de métricas:
+   - Implementa la función RPC `get_tasks_status_count` consumida por el tablero:
 
      ```sql
      create or replace function public.get_tasks_status_count()
@@ -125,7 +138,7 @@ La organización sigue un enfoque modular que separa dominio, servicios y presen
      $$;
      ```
 
-   Ajusta permisos según tus políticas de seguridad (RLS).
+   Ajusta las políticas RLS para permitir las operaciones necesarias desde el cliente.
 
 ## Uso
 
@@ -143,48 +156,53 @@ La aplicación estará disponible en [http://localhost:3000](http://localhost:30
 pnpm build
 ```
 
-Para previsualizar la build localmente:
+Para previsualizar la build local:
 
 ```bash
 pnpm start
 ```
 
-## Testing
+### Linter
 
-Actualmente el proyecto no incluye suites de pruebas automatizadas. Se recomienda incorporar en el futuro:
+```bash
+pnpm lint
+```
 
-- Pruebas unitarias para hooks (`useTasksQuery`, `useTaskCreate`, `useTaskUpdate`, `useTaskDelete`, `useTaskBoardState`).
-- Tests de integración para el flujo del modal y acciones inline (React Testing Library + MSW).
-- Validaciones complementarias con Zod y pruebas de contratos (RPC Supabase).
+### Ejecución de Tests
+
+```bash
+pnpm test
+```
+
+Las suites actuales cubren los hooks de React Query (`useTaskCreate`, `useTaskUpdate`, `useTaskDelete`, `useTasksQuery`, `useTasksCountByStatusQuery`, `useTaskFetch`), el hook utilitario `useDebounce` y componentes clave del tablero (`BoardView`, `ListView`, `StatusTasks`), garantizando el flujo principal de lectura y mutación de tareas.
 
 ## Despliegue
 
 El proyecto está listo para desplegarse en **Vercel** u otra plataforma compatible con Next.js:
 
-1. Configura las variables `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` en el panel de tu proveedor.
-2. Ejecuta `pnpm build` durante el proceso de build.
-3. Asegúrate de que las políticas RLS de Supabase permitan el acceso desde el frontend (JWT anónimo o políticas personalizadas).
+1. Define `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` en el panel de variables de entorno.
+2. Ejecuta `pnpm build` durante el paso de build.
+3. Verifica que las políticas RLS de Supabase permitan el acceso requerido (lectura/escritura sobre `tasks` y uso del RPC).
 
-Si deseas un despliegue autoalojado, puedes generar la build estática y servirla con `pnpm start` detrás de un proxy (Nginx, Caddy, etc.).
+Para un despliegue autoalojado, genera la build y sirve la aplicación con `pnpm start` detrás de tu servidor preferido (Nginx, Caddy, etc.).
 
 ## Decisiones Técnicas
 
-- **Arquitectura modular claramente acotada:** Se separan capas (dominio, servicios, UI) para facilitar pruebas y escalabilidad.
-- **React Query para sincronización remota:** Maneja caché, estados de error y revalidación tras mutaciones (create/update/delete).
-- **Supabase como BaaS:** Aprovecha Postgres, funciones RPC y autenticación nativa (si se requiere en el futuro).
-- **Carbon Design System + Tailwind 4:** Combina componentes accesibles de IBM con utilidades modernas para estilos responsivos.
-- **Búsqueda debounced en cliente:** Reduce llamadas innecesarias y mejora percepción de rendimiento.
-- **Providers dedicados:** `ReactQueryProvider` y `TaskBoardProvider` encapsulan lógica compartida y evitan prop drilling.
+- **Arquitectura modular:** Separación explícita entre dominio, UI, servicios y providers para facilitar escalabilidad. Se consideró usar una arquitectura hexagonal simplificada por features, pero se optó por una estructura modular más directa, alineada con el alcance y la simplicidad del proyecto.
+- **React Query como capa de datos:** Gestiona caché, estados transitorios y revalidación tras operaciones CRUD.
+- **Supabase como BaaS:** Uso de Postgres, funciones RPC y cliente JS oficial (`@supabase/supabase-js`).
+- **Búsqueda normalizada y debounced:** `useTasksQuery` limpia el término y `useDebounce` evita saturar la API.
+- **UI híbrida Carbon + Tailwind:** Carbon aporta accesibilidad y consistencia; Tailwind permite ajustes finos rápidos.
+- **Contexto especializado (`TaskBoardProvider`):** Expone estado compartido de tareas, métricas y mutaciones a toda la UI.
 
 ## Limitaciones y Áreas de Mejora
 
-- **Sin drag & drop:** La vista kanban no permite reorganizar tareas mediante arrastre.
-- **Sin paginación ni carga incremental:** Todas las tareas se traen en una única consulta.
-- **Validaciones básicas:** El modal solo valida campos requeridos; se podría incorporar Zod o `react-hook-form`.
-- **Falta de autenticación/autorización:** Cualquier usuario con la clave anónima puede operar sobre la tabla.
-- **Cobertura de pruebas pendiente:** No existen tests automatizados que aseguren regresiones mínimas.
-- **Experiencia móvil mejorable:** Aunque responsive, la interacción puede optimizarse (gestos, atajos, feedback háptico).
+- **Sin drag & drop:** La vista kanban no admite reorganización mediante arrastre, podría ser una buena implementación para mejorar la experiencia de usuario.
+- **Sin paginación ni carga incremental:** Todas las tareas se consultan en bloque; podría añadirse paginado o infinite scroll.
+- **Validaciones sencillas:** Se validan los campos del formulario de creación/edición usando un modal, pero hubiese sido mejor práctica integrar Zod o `react-hook-form` para hacer validaciones más organizadas y robustas.
+- **Cobertura de pruebas ampliable:** Existen tests unitarios clave, pero faltan escenarios end-to-end y pruebas sobre servicios reales.
+- **Optimización móvil:** La vista lista es responsive, aunque se pueden mejorar gestos y atajos en dispositivos táctiles.
 
 ## Licencia
 
-Este proyecto aún no especifica una licencia formal. Antes de distribuirlo, añade un archivo `LICENSE` con los términos correspondientes (por ejemplo, MIT o Apache-2.0).
+Este proyecto está bajo la [MIT License](LICENSE).
