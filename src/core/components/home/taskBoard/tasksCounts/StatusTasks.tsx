@@ -35,7 +35,7 @@ const StatusTasks = () => {
       style={{
         display: "grid",
         gap: "var(--cds-spacing-05, 1rem)",
-        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
       }}
     >
       {/* Skeleton placeholders while loading */}

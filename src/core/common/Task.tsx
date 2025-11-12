@@ -76,11 +76,17 @@ const TaskComponent = ({ task }: TaskComponentProps) => {
             showStatusControl
           />
         </div>
-        <Heading className="text-base font-semibold text-gray-900">
-          {title}
+        <Heading
+          style={{
+            fontSize: "2rem",
+            marginBottom: "0.5rem",
+            fontWeight: "350",
+          }}
+        >
+          {title.slice(0, 40)} {title.length > 40 && "..."}
         </Heading>
         <p className="text-sm text-gray-600">
-          {description ?? "Sin descripción"}
+          {description.slice(0, 100)} {description.length > 100 && "..."}
         </p>
       </Tile>
       {isEditModalOpen && (

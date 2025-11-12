@@ -19,7 +19,7 @@ const BoardView = () => {
 
   return (
     <div
-      className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-(--board-columns)"
+      className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-(--board-columns) max-h-[550px] overflow-y-auto"
       style={boardColumnsStyle}
     >
       {TASK_STATUSES.map((status) => (

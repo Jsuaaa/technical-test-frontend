@@ -47,7 +47,15 @@ const ListView = () => {
           ))}
         </Stack>
       ) : (
-        <div style={{ width: "100%", overflowX: "auto", minHeight: "24rem" }}>
+        <div
+          style={{
+            width: "100%",
+            overflowX: "auto",
+            minHeight: "24rem",
+            maxHeight: "550px",
+            overflowY: "auto",
+          }}
+        >
           <StructuredListWrapper selection style={{ minWidth: "720px" }}>
             <StructuredListHead>
               <StructuredListRow head>

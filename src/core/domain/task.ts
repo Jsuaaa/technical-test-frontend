@@ -31,3 +31,9 @@ export enum TaskPriority {
   MEDIUM = "Media",
   LOW = "Baja",
 }
+
+// * Task action callbacks type
+export type TaskActionCallbacks = {
+  onSuccess?: () => void;
+  onError?: (error: unknown) => void;
+};

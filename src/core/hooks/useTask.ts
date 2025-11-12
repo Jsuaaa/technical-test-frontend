@@ -1,5 +1,4 @@
-import { Task, TaskStatus } from "../domain/task";
-import { TaskActionCallbacks } from "../utils/formatTaskPriorityLabel";
+import { Task, TaskActionCallbacks, TaskStatus } from "../domain/task";
 import useTasksQueries from "./useTasksQueries";
 
 const useTaskBoard = () => {
