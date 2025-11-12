@@ -1,0 +1,39 @@
+// * Task type
+export type Task = {
+  id: number;
+  title: string;
+  description: string;
+  status: TaskStatus;
+  priority: TaskPriority;
+};
+
+// * Tasks count by status type
+export type TasksCountByStatus = {
+  status: TaskStatus;
+  total: number;
+};
+
+// * Update task variables type
+export type UpdateTaskVariables = {
+  id: number;
+  task: Partial<Task>;
+};
+
+// * Enums
+export enum TaskStatus {
+  BACKLOG = "backlog",
+  IN_PROGRESS = "in-progress",
+  DONE = "done",
+}
+
+export enum TaskPriority {
+  HIGH = "Alta",
+  MEDIUM = "Media",
+  LOW = "Baja",
+}
+
+// * Task action callbacks type
+export type TaskActionCallbacks = {
+  onSuccess?: () => void;
+  onError?: (error: unknown) => void;
+};
