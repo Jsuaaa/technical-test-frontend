@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
@@ -10,13 +11,11 @@ import {
 } from "../services/taskService";
 import { Task, UpdateTaskVariables } from "../domain/task";
 
-type TasksQueryFilters = {
+export type TasksQueryFilters = {
   searchTerm?: string;
 };
 
-const useTasksQueries = (filters?: TasksQueryFilters) => {
-  const queryClient = useQueryClient();
-
+export const useTasksQuery = (filters?: TasksQueryFilters) => {
   const normalizedSearchTerm = filters?.searchTerm?.trim();
 
   const tasksQuery = useQuery({
@@ -24,10 +23,34 @@ const useTasksQueries = (filters?: TasksQueryFilters) => {
     queryFn: () => getTasks({ search: normalizedSearchTerm }),
   });
 
+  return {
+    tasks: tasksQuery.data ?? [],
+    isLoading: tasksQuery.isLoading,
+    isError: tasksQuery.isError,
+    error: tasksQuery.error,
+    refetch: tasksQuery.refetch,
+    isSuccess: tasksQuery.isSuccess,
+  };
+};
+
+export const useTasksCountByStatusQuery = () => {
   const tasksCountByStatusQuery = useQuery({
     queryKey: ["tasks-count-by-status"],
     queryFn: getTasksCountByStatus,
   });
+
+  return {
+    tasksCountByStatus: tasksCountByStatusQuery.data ?? [],
+    isLoading: tasksCountByStatusQuery.isLoading,
+    isError: tasksCountByStatusQuery.isError,
+    error: tasksCountByStatusQuery.error,
+    isSuccess: tasksCountByStatusQuery.isSuccess,
+    refetch: tasksCountByStatusQuery.refetch,
+  };
+};
+
+export const useTaskCreate = () => {
+  const queryClient = useQueryClient();
 
   const createTaskMutation = useMutation({
     mutationFn: (task: Omit<Task, "id">) => createTask(task),
@@ -36,6 +59,19 @@ const useTasksQueries = (filters?: TasksQueryFilters) => {
       queryClient.invalidateQueries({ queryKey: ["tasks-count-by-status"] });
     },
   });
+
+  return {
+    createTask: createTaskMutation.mutate,
+    createTaskAsync: createTaskMutation.mutateAsync,
+    isCreating: createTaskMutation.isPending,
+    isCreateSuccess: createTaskMutation.isSuccess,
+    isCreateError: createTaskMutation.isError,
+    createError: createTaskMutation.error,
+  };
+};
+
+export const useTaskUpdate = () => {
+  const queryClient = useQueryClient();
 
   const updateTaskMutation = useMutation({
     mutationFn: ({ id, task }: UpdateTaskVariables) => updateTask(id, task),
@@ -46,6 +82,19 @@ const useTasksQueries = (filters?: TasksQueryFilters) => {
     },
   });
 
+  return {
+    updateTask: updateTaskMutation.mutate,
+    updateTaskAsync: updateTaskMutation.mutateAsync,
+    isUpdating: updateTaskMutation.isPending,
+    isUpdateSuccess: updateTaskMutation.isSuccess,
+    isUpdateError: updateTaskMutation.isError,
+    updateError: updateTaskMutation.error,
+  };
+};
+
+export const useTaskDelete = () => {
+  const queryClient = useQueryClient();
+
   const deleteTaskMutation = useMutation({
     mutationFn: (id: number) => deleteTask(id),
     onSuccess: (_, id) => {
@@ -55,30 +104,27 @@ const useTasksQueries = (filters?: TasksQueryFilters) => {
     },
   });
 
-  const fetchTask = (id: number) =>
-    queryClient.fetchQuery({
-      queryKey: ["tasks", id],
-      queryFn: () => getTask(id),
-    });
-
   return {
-    tasks: tasksQuery.data ?? [],
-    isLoading: tasksQuery.isLoading,
-    isError: tasksQuery.isError,
-    error: tasksQuery.error,
-    tasksCountByStatus: tasksCountByStatusQuery.data ?? [],
-    isLoadingTasksCountByStatus: tasksCountByStatusQuery.isLoading,
-    isErrorTasksCountByStatus: tasksCountByStatusQuery.isError,
-    errorTasksCountByStatus: tasksCountByStatusQuery.error,
-    refetch: tasksQuery.refetch,
-    createTask: createTaskMutation.mutate,
-    isCreating: createTaskMutation.isPending,
-    updateTask: updateTaskMutation.mutate,
-    isUpdating: updateTaskMutation.isPending,
     deleteTask: deleteTaskMutation.mutate,
+    deleteTaskAsync: deleteTaskMutation.mutateAsync,
     isDeleting: deleteTaskMutation.isPending,
-    fetchTask,
+    isDeleteSuccess: deleteTaskMutation.isSuccess,
+    isDeleteError: deleteTaskMutation.isError,
+    deleteError: deleteTaskMutation.error,
   };
 };
 
-export default useTasksQueries;
+export const useTaskFetch = () => {
+  const queryClient = useQueryClient();
+
+  const fetchTask = useCallback(
+    (id: number) =>
+      queryClient.fetchQuery({
+        queryKey: ["tasks", id],
+        queryFn: () => getTask(id),
+      }),
+    [queryClient]
+  );
+
+  return { fetchTask };
+};

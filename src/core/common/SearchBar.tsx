@@ -1,42 +1,31 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { Search } from "@carbon/react";
 
 import useDebounce from "../hooks/useDebounce";
+import { useTaskBoard } from "../providers/TaskBoardProvider";
 
-type SearchBarProps = {
-  value: string;
-  onChange: (value: string) => void;
-  onClear?: () => void;
-};
-
-const SearchBar = ({ value, onChange, onClear }: SearchBarProps) => {
-  const [inputValue, setInputValue] = useState(value);
-  const debouncedValue = useDebounce(inputValue, 400);
+const SearchBar = () => {
+  const { searchTerm, handleSearch, clearSearch } = useTaskBoard();
+  const debouncedValue = useDebounce(searchTerm, 400);
 
   useEffect(() => {
-    setInputValue(value);
-  }, [value]);
-
-  useEffect(() => {
-    if (debouncedValue === value) {
+    if (debouncedValue === searchTerm) {
       return;
     }
 
-    onChange(debouncedValue);
+    handleSearch(debouncedValue);
 
     if (debouncedValue === "") {
-      onClear?.();
+      clearSearch();
     }
-  }, [debouncedValue, value, onChange, onClear]);
+  }, [debouncedValue, handleSearch, clearSearch]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    handleSearch(event.target.value);
   };
 
   const handleClear = () => {
-    setInputValue("");
-    onChange("");
-    onClear?.();
+    clearSearch();
   };
 
   return (
@@ -46,7 +35,7 @@ const SearchBar = ({ value, onChange, onClear }: SearchBarProps) => {
         labelText="Buscar tareas"
         placeholder="Buscar por ID, título o descripción"
         size="lg"
-        value={inputValue}
+        value={searchTerm}
         onChange={handleChange}
         closeButtonLabelText="Limpiar búsqueda"
         onClear={handleClear}

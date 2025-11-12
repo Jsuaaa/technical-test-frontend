@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Button } from "@carbon/react";
 
 import TaskEditModal from "./TaskEditModal";
-import useTaskBoard from "../hooks/useTask";
 import { Task } from "../domain/task";
 import { PlusIcon } from "lucide-react";
+import { useTaskBoard } from "../providers/TaskBoardProvider";
 
 const CreateTaskButton = () => {
   const { handleCreateTask, isCreating } = useTaskBoard();

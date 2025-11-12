@@ -1,9 +1,9 @@
 import { CSSProperties, useMemo } from "react";
 import { Heading } from "@carbon/react";
-import useTaskBoard from "../../../../hooks/useTask";
 import TaskComponent from "@/src/core/common/Task";
 import { TASK_STATUSES } from "@/src/core/data/constants";
 import { formatTaskStatusLabel } from "@/src/core/utils/formatTaskStatusLabel";
+import { useTaskBoard } from "@/src/core/providers/TaskBoardProvider";
 
 const BoardView = () => {
   const { tasks, isLoading } = useTaskBoard();

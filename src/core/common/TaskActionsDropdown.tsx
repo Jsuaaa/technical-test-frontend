@@ -4,7 +4,7 @@ import type { MouseEvent as ReactMouseEvent } from "react";
 import TaskPrioritySelect from "./TaskPrioritySelect";
 import TaskStatusSelect from "./TaskStatusSelect";
 import { Task, TaskStatus } from "../domain/task";
-import useTaskBoard from "../hooks/useTask";
+import { useTaskBoard } from "../providers/TaskBoardProvider";
 
 type TaskActionsDropdownProps = {
   triggerAriaLabel: string;

@@ -6,7 +6,10 @@ export const DEFAULT_TASK_PRIORITY = TaskPriority.LOW;
 export const DEFAULT_TASK_STATUS = TaskStatus.BACKLOG;
 
 // * Task priority color mapping, usually this comes from a db
-export const PRIORITY_KIND: Record<TaskPriority, "red" | "magenta" | "cyan"> = {
+export const PRIORITY_KIND_COLOR: Record<
+  TaskPriority,
+  "red" | "magenta" | "cyan"
+> = {
   [TaskPriority.HIGH]: "red",
   [TaskPriority.MEDIUM]: "magenta",
   [TaskPriority.LOW]: "cyan",

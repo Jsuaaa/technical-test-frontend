@@ -4,9 +4,9 @@ import { Heading, Tag, Tile } from "@carbon/react";
 import TaskEditModal from "./TaskEditModal";
 import TaskActionsDropdown from "./TaskActionsDropdown";
 import { Task } from "../domain/task";
-import useTaskBoard from "../hooks/useTask";
-import { PRIORITY_KIND, TASK_STATUS_COLOR } from "../data/constants";
+import { PRIORITY_KIND_COLOR, TASK_STATUS_COLOR } from "../data/constants";
 import { formatTaskStatusLabel } from "../utils/formatTaskStatusLabel";
+import { useTaskBoard } from "../providers/TaskBoardProvider";
 
 type TaskComponentProps = {
   task: Task;
@@ -56,7 +56,7 @@ const TaskComponent = ({ task }: TaskComponentProps) => {
       >
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-2">
-            <Tag type={PRIORITY_KIND[priority]} className="w-fit">
+            <Tag type={PRIORITY_KIND_COLOR[priority]} className="w-fit">
               {priority}
             </Tag>
             <Tag type={TASK_STATUS_COLOR[status]} className="w-fit">
