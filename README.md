@@ -203,6 +203,7 @@ Para un despliegue autoalojado, genera la build y sirve la aplicación con `pnpm
 - **Validaciones sencillas:** Se validan los campos del formulario de creación/edición usando un modal, pero hubiese sido mejor práctica integrar Zod o `react-hook-form` para hacer validaciones más organizadas y robustas.
 - **Cobertura de pruebas ampliable:** Existen tests unitarios clave, pero faltan escenarios end-to-end y pruebas sobre servicios reales.
 - **Optimización móvil:** La vista lista es responsive, aunque se pueden mejorar gestos y atajos en dispositivos táctiles.
+- **Filtros de búsqueda:** Se podrían implementar filtros en la búsqueda por estado y prioridad, para hacer más fácil el manejo de la app y mejorar la experiencia de usuario.
 
 ## Licencia
 
