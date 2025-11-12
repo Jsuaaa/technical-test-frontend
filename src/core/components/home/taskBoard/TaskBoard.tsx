@@ -1,16 +1,26 @@
 "use client";
 
-import { useState } from "react";
 import { Button, Heading, InlineNotification } from "@carbon/react";
+import { useState } from "react";
+
 import ListView from "./list/ListView";
 import CreateTaskButton from "../../../common/CreateTaskButton";
-import useTaskBoard from "../../../hooks/useTask";
+import useTaskBoard, { TaskBoardProvider } from "../../../hooks/useTask";
 import BoardView from "./board/BoardView";
 import StatusTasks from "./tasksCounts/StatusTasks";
+import SearchBar from "../../../common/SearchBar";
 
-const TaskBoard = () => {
+const TaskBoardContent = () => {
   const [view, setView] = useState<"board" | "list">("board");
-  const { isLoading, isError, error, refetch } = useTaskBoard();
+  const {
+    isLoading,
+    isError,
+    error,
+    refetch,
+    searchTerm,
+    handleSearch,
+    clearSearch,
+  } = useTaskBoard();
 
   return (
     <div className="w-full space-y-6 max-w-[1200px]">
@@ -44,7 +54,14 @@ const TaskBoard = () => {
               Vista lista
             </Button>
           </div>
-          <CreateTaskButton />
+          <div className="flex flex-wrap items-center gap-3">
+            <SearchBar
+              value={searchTerm}
+              onChange={handleSearch}
+              onClear={clearSearch}
+            />
+            <CreateTaskButton />
+          </div>
         </div>
       </div>
       <div className="w-full">
@@ -71,5 +88,11 @@ const TaskBoard = () => {
     </div>
   );
 };
+
+const TaskBoard = () => (
+  <TaskBoardProvider>
+    <TaskBoardContent />
+  </TaskBoardProvider>
+);
 
 export default TaskBoard;

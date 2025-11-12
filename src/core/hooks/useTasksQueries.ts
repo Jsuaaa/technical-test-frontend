@@ -10,12 +10,18 @@ import {
 } from "../services/taskService";
 import { Task, UpdateTaskVariables } from "../domain/task";
 
-const useTasksQueries = () => {
+type TasksQueryFilters = {
+  searchTerm?: string;
+};
+
+const useTasksQueries = (filters?: TasksQueryFilters) => {
   const queryClient = useQueryClient();
 
+  const normalizedSearchTerm = filters?.searchTerm?.trim();
+
   const tasksQuery = useQuery({
-    queryKey: ["tasks"],
-    queryFn: getTasks,
+    queryKey: ["tasks", { search: normalizedSearchTerm ?? null }],
+    queryFn: () => getTasks({ search: normalizedSearchTerm }),
   });
 
   const tasksCountByStatusQuery = useQuery({
@@ -41,7 +47,7 @@ const useTasksQueries = () => {
   });
 
   const deleteTaskMutation = useMutation({
-    mutationFn: (id: string) => deleteTask(id),
+    mutationFn: (id: number) => deleteTask(id),
     onSuccess: (_, id) => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.removeQueries({ queryKey: ["tasks", id] });
@@ -49,7 +55,7 @@ const useTasksQueries = () => {
     },
   });
 
-  const fetchTask = (id: string) =>
+  const fetchTask = (id: number) =>
     queryClient.fetchQuery({
       queryKey: ["tasks", id],
       queryFn: () => getTask(id),
