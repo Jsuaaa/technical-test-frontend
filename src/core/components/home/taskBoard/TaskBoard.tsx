@@ -5,10 +5,12 @@ import { useState } from "react";
 
 import ListView from "./list/ListView";
 import CreateTaskButton from "../../../common/CreateTaskButton";
-import useTaskBoard, { TaskBoardProvider } from "../../../hooks/useTask";
 import BoardView from "./board/BoardView";
 import StatusTasks from "./tasksCounts/StatusTasks";
 import SearchBar from "../../../common/SearchBar";
+import TaskBoardProvider, {
+  useTaskBoard,
+} from "@/src/core/providers/TaskBoardProvider";
 
 const TaskBoardContent = () => {
   const [view, setView] = useState<"board" | "list">("board");
@@ -55,11 +57,7 @@ const TaskBoardContent = () => {
             </Button>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <SearchBar
-              value={searchTerm}
-              onChange={handleSearch}
-              onClear={clearSearch}
-            />
+            <SearchBar />
             <CreateTaskButton />
           </div>
         </div>

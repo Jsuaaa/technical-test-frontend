@@ -4,5 +4,8 @@ pnpm prepare
 echo "Linting ..."
 pnpm lint
 
+echo "Testing ..."
+pnpm test
+
 echo "Building"
 pnpm build

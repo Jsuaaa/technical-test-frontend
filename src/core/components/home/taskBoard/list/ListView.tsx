@@ -15,9 +15,12 @@ import TaskComponent from "../../../../common/Task";
 import TaskEditModal from "../../../../common/TaskEditModal";
 import TaskActionsDropdown from "../../../../common/TaskActionsDropdown";
 import { Task, TaskPriority } from "../../../../domain/task";
-import useTaskBoard from "../../../../hooks/useTask";
 import { formatTaskStatusLabel } from "@/src/core/utils/formatTaskStatusLabel";
-import { PRIORITY_KIND } from "@/src/core/data/constants";
+import {
+  PRIORITY_KIND_COLOR,
+  TASK_STATUS_COLOR,
+} from "@/src/core/data/constants";
+import { useTaskBoard } from "@/src/core/providers/TaskBoardProvider";
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -72,10 +75,14 @@ const ListView = () => {
                   <StructuredListCell>FMCR #{task.id}</StructuredListCell>
                   <StructuredListCell>{task.title}</StructuredListCell>
                   <StructuredListCell>
-                    <Tag type="gray">{formatTaskStatusLabel(task.status)}</Tag>
+                    <Tag type={TASK_STATUS_COLOR[task.status]}>
+                      {formatTaskStatusLabel(task.status)}
+                    </Tag>
                   </StructuredListCell>
                   <StructuredListCell>
-                    <Tag type={PRIORITY_KIND[task.priority as TaskPriority]}>
+                    <Tag
+                      type={PRIORITY_KIND_COLOR[task.priority as TaskPriority]}
+                    >
                       {task.priority}
                     </Tag>
                   </StructuredListCell>
