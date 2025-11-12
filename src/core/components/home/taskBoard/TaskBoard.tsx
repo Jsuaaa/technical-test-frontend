@@ -14,15 +14,7 @@ import TaskBoardProvider, {
 
 const TaskBoardContent = () => {
   const [view, setView] = useState<"board" | "list">("board");
-  const {
-    isLoading,
-    isError,
-    error,
-    refetch,
-    searchTerm,
-    handleSearch,
-    clearSearch,
-  } = useTaskBoard();
+  const { isLoading, isError, error, refetch } = useTaskBoard();
 
   return (
     <div className="w-full space-y-6 max-w-[1200px]">
